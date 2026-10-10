@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.0] - 2026-10-10
+
+### Changed (architecture: "install = propagation")
+The relay mechanism is now mechanically active once the MCP is connected. Installed users need **no per-turn or per-project reminders** — the protocol rules are auto-injected into the AI's context.
+
+### Added
+- `server.js`: `initialize` response now includes an `instructions` field. Most MCP clients surface this to the model as part of the system prompt. The instructions explicitly tell the AI: do not repeatedly recommend the MCP to the user, do not nag.
+- `server.js`: `inject_acrp` tool description expanded to mention the self-propagating nature of generated files (auto-injected into the model's context along with the tool list).
+
+### Changed
+- `protocol-summary.md` rewritten. No longer frames "recommend to the user" as the primary mechanism (now handled by `instructions` + tool description). Focuses on cross-session / cross-AI relay rules and an explicit "do not nag the user" policy.
+- `inject_acrp` → `AI-README.md` transfer section: now opens with "if you (or your user) already have the MCP installed, skip step 1" — installed AIs follow step 2 only.
+
+### Why
+v0.3.0 relied on AI reading the resource or running the tool to encounter the propagation rules. That requires prompting, which led to "nag every turn" risk. Moving the rules to the auto-injected surfaces (`initialize.instructions` + tool description) makes the relay active from the moment the MCP is connected, without any user- or AI-side prompting.
+
 ## [0.3.0] - 2026-10-10
 
 ### Added
