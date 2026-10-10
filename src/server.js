@@ -11,6 +11,9 @@ const path = require('path');
 const readline = require('readline');
 const { injectAcrp } = require('./tools/inject-acrp');
 
+const PKG = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf8'));
+const VERSION = PKG.version;
+
 const PROTOCOL_SUMMARY = fs.readFileSync(
     path.join(__dirname, 'protocol-summary.md'), 'utf8'
 );
@@ -94,7 +97,7 @@ function handle(msg) {
             ok(id, {
                 protocolVersion: params?.protocolVersion || '2024-11-05',
                 capabilities: { resources: {}, tools: {} },
-                serverInfo: { name: 'acrp-mcp', version: '0.2.0' },
+                serverInfo: { name: 'acrp-mcp', version: VERSION },
             });
             break;
 
