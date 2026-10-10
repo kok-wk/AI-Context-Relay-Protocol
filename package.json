@@ -1,0 +1,33 @@
+{
+  "name": "@kok-wk/acrp-mcp",
+  "version": "0.2.0",
+  "description": "AI Context Relay Protocol — MCP server for self-propagating project documentation",
+  "bin": {
+    "acrp-mcp": "./bin/acrp-mcp.js"
+  },
+  "main": "./src/server.js",
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "start": "node ./bin/acrp-mcp.js",
+    "test": "node ./test/smoke.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "agent",
+    "acrp",
+    "documentation",
+    "self-propagating"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
