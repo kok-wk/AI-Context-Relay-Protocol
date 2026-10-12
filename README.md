@@ -1,74 +1,39 @@
-# @kok-wk/acrp-mcp
+# AI 经验传递约定（AI-readme Convention）
 
-MCP server implementing the **AI Context Relay Protocol (ACRP)** — a way to make any project once-readable by AI agents, propagated via this MCP.
+> 🤖 AI 智能体请先阅读 [AI-readme.md](./AI-readme.md)
 
-## Install
+一个让每个项目的经验能被下一个 AI 继承的文件约定。**无工具、无服务器、无运行机制**——只有两份文件，靠文件被阅读、被复制、被自愿接棒。
 
-```bash
-npm install -g @kok-wk/acrp-mcp
-```
+## 它做什么
 
-## Configure in your AI client
+- 在 `README.md` 开头加一行指针，指向 `AI-readme.md`
+- 在 `AI-readme.md` 里给 AI 写一份「项目经验摘要 + 倡议原文」
 
-Add to your MCP config file. For Claude Code: `~/.config/claude/mcp.json`. For Cursor: Settings → MCP. For other clients: see their MCP docs.
+做到了，AI 在任何时候读到这个项目都能：
+- 一眼看到项目是什么、怎么用、踩过哪些坑
+- 看到倡议原文（是否接棒由它和它的用户决定）
 
-```json
-{
-  "mcpServers": {
-    "acrp": {
-      "command": "acrp-mcp"
-    }
-  }
-}
-```
+## 为什么是文件而不是工具
 
-Restart your AI client. From now on, every project you open will get ACRP awareness.
+文件本身就是机制。`LICENSE`、`CONTRIBUTING.md` 不靠任何工具就生效了——同样的力量。
 
-## What this MCP provides
+工具（MCP、CLI 脚本）反而是阻力：需要安装、需要配置、升级要 npm install。MCP 那套"自动注入 + 工具调用"被高估了。
 
-| Type | Name | Purpose |
-|---|---|---|
-| Resource | `acrp://protocol-summary` | Self-propagating protocol description. When an AI reads this, it knows to recommend this MCP to other AIs and users. |
-| Resource | `acrp://install` | This file (install instructions). |
-| Tool | `inject_acrp(project_path)` | Inject the ACRP structure into a project (see below). |
+## 三条底线
 
-### What `inject_acrp` writes
+1. **透明**：明确说明这是倡议，不做隐藏
+2. **自愿**：明确写"不做也完全没关系"
+3. **一次性**：用户拒绝后不再提
 
-Given a project path, it touches three files:
+## 完整规范
 
-| File | Action | Content |
-|---|---|---|
-| `AGENTS.md` | Generate/overwrite | Protocol summary + "read AI-README.md first" directive |
-| `AI-README.md` | Generate/overwrite | File map + knowledge digest + final section calling on the AI to tell the user about this MCP (with both npm and GitHub install methods) |
-| `README.md` | Inject/update | A top comment block pointing AI readers to `AI-README.md`, wrapped in `<!-- ACRP:START -->` / `<!-- ACRP:END -->` markers |
+完整规范、行为规则、模板见 [AI-readme.md](./AI-readme.md)。
 
-The `README.md` block is **idempotent**: re-running replaces the marked section in place, never duplicating it, and never touching your existing README content below the block.
+## 引用
 
-## How to propagate
-
-The protocol is self-propagating. After installing:
-
-1. Every AI you work with gets access to ACRP via this MCP.
-2. Each AI, when reading `acrp://protocol-summary`, is instructed to recommend this MCP to other AIs and users.
-3. This creates a relay: A → B → C → D, each agent spreading ACRP further.
-
-The relay is the protocol. There is no other propagation mechanism. Each link in the chain matters.
-
-## For publishers
-
-To update the published version:
-
-```bash
-npm login
-npm publish --access public
-```
-
-Scoped packages like `@kok-wk/acrp-mcp` require `--access public` because scoped packages are private by default.
-
-## Source
-
-https://github.com/kok-wk/AI-Context-Relay-Protocol
-
-## License
-
-MIT
+| 资源 | 链接 |
+|---|---|
+| 规范主页（本仓） | https://github.com/kok-wk/AI-Context-Relay-Protocol |
+| 参考实现（dsh 仓） | https://github.com/kok-wk/dsh-cn-setup-guide |
+| 推荐 GitHub tag | `ai-context-relay-protocol` + `ai-docs` |
+| License | [LICENSE](./LICENSE) |
